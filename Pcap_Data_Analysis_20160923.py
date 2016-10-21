@@ -353,7 +353,7 @@ def Collecting_Pcapfiles():
     ####### FreeBSD Suricatat with ET Rules ########
         
          
-    copy_pcap_files_via_ssh('192.168.1.9','root','D3Sepsrccity',remote_directory_FreeBSD_,local_directory_FreeBSD_Suricata_ET)
+    copy_pcap_files_via_ssh('192.168.1.30','root','D3Sepsrccity',remote_directory_FreeBSD_,local_directory_FreeBSD_Suricata_ET)
     
  #   copy_pcap_files_via_ssh('138.40.246.51','root','D3Sepsrccity',remote_directory_FreeBSD,file_to_copy,local_file)
  
@@ -654,10 +654,12 @@ if __name__ == "__main__":
     Input_packet_headers=[]
     List_of_Packet_headers=[]
     Combined_list_of_Packets=[]
+#####Collecting Pcap Files ###########
     Collecting_Pcapfiles()
     con=creat_tables_sqlite()
     con.text_factory = str
     cur=con.cursor()
+ 
  #   con.execute('''DELETE FROM sqlite_sequence where name=Defense_Tools''')
  #   con.execute('''DELETE FROM Detection''')
  #   cur.execute("""INSERT INTO Defense_Tools (Defense_ID) VALUES(?)""",1)
@@ -676,6 +678,7 @@ if __name__ == "__main__":
     Detection_ID3=2
     Detection_ID4=3
   #  Defense_tools_ID=populate_Defense_tools('Win_Snort_Com',con)
+    print "Processing WinSnortCom Data............"
     Defense_tools_ID=1
     mysql_Data1, mysql_Data2, mysql_Data3 =mysql_database_query("WinSnortCom",'WinSnortCom',"D3Sepsrccity")
    #cap1=pyshark.FileCapture("C:\\Pcap2XML\\Data_Win_Snort_Com_2.pcap")
@@ -684,10 +687,9 @@ if __name__ == "__main__":
     Combined_list_of_Packets= Combined_list_of_Packets+List_of_Packet_headers
     cap,File_handler=reading_pcap_files(local_directory_Input_data)
     temp,Input_packet_headers=packet_tracing_from_input_to_output(cap,File_handler,List_of_Packet_headers,Defense_tools_ID,con)
-    
-    
- #   print len(temp)
+    print len(temp)
 
+    print "Processing Win_Snort_Reg Data............"
     #Defense_tools_ID=populate_Defense_tools('Win_Snort_Reg',con)
     Defense_tools_ID=2
     mysql_Data1, mysql_Data2, mysql_Data3 =mysql_database_query("Win_Snort_Reg",'W_Snort_Reg',"D3Sepsrccity")
@@ -699,7 +701,8 @@ if __name__ == "__main__":
     print len(temp)
 
 
-##    #Defense_tools_ID=populate_Defense_tools('Win_Suricata_ET',con)
+    print "Processing WinSuricataET Data............"
+   #Defense_tools_ID=populate_Defense_tools('Win_Suricata_ET',con)
     Defense_tools_ID=3
     mysql_Data1, mysql_Data2, mysql_Data3 =mysql_database_query("WinSuricataET",'WinSuricataET',"D3Sepsrccity")
     cap,File_handler=reading_pcap_files(local_directory_Win_Suricata_ET) 
@@ -710,7 +713,8 @@ if __name__ == "__main__":
     print len(temp)
     
 
-##    #Defense_tools_ID=populate_Defense_tools('Ubuntu_Snort_Com',con)
+    print "Processing Ubuntu_Snort_Com Data............"
+    #Defense_tools_ID=populate_Defense_tools('Ubuntu_Snort_Com',con)
     Defense_tools_ID=4
     mysql_Data1,mysql_Data2,mysql_Data3=mysql_database_query("Ubuntu_Snort_Com",'U_Snort_Com',"D3Sepsrccity")
     cap,File_handler=reading_pcap_files(local_directory_Ubuntu_Snort_Com) 
@@ -721,8 +725,8 @@ if __name__ == "__main__":
     print len(temp)
    
 
-
-##    #Defense_tools_ID=populate_Defense_tools('Ubuntu_Snort_Reg',con)
+    print "Processing Ubuntu_Snort_Reg Data............"
+    #Defense_tools_ID=populate_Defense_tools('Ubuntu_Snort_Reg',con)
     Defense_tools_ID=5
     mysql_Data1, mysql_Data2, mysql_Data3 =mysql_database_query("Ubuntu_Snort_Reg",'U_Snort_Reg',"D3Sepsrccity")
     cap,File_handler=reading_pcap_files(local_directory_Ubuntu_Snort_Reg)
@@ -731,85 +735,93 @@ if __name__ == "__main__":
     cap,File_handler=reading_pcap_files(local_directory_Input_data)
     temp,Input_packet_headers=packet_tracing_from_input_to_output(cap,File_handler,List_of_Packet_headers,Defense_tools_ID,con)
     print len(temp)
-##
-##    #Defense_tools_ID=populate_Defense_tools('Ubuntu_Suricata_ET',con)
+
+    print "Processing Ubuntu_Suricata_ET Data............"
+    #Defense_tools_ID=populate_Defense_tools('Ubuntu_Suricata_ET',con)
     Defense_tools_ID=6
     mysql_Data1, mysql_Data2, mysql_Data3 =mysql_database_query("Ubuntu_Suricata_ET",'U_Suricata_ET',"D3Sepsrccity")
-    cap,File_handle=reading_pcap_files(local_directory_Ubuntu_Suricata_ET) 
+    cap,File_handler=reading_pcap_files(local_directory_Ubuntu_Suricata_ET) 
     List_of_Packet_headers=populating_tables(cap,File_handler,mysql_Data1,mysql_Data2,mysql_Data3, Defense_tools_ID,Detection_ID1,Detection_ID2,con)
     Combined_list_of_Packets= Combined_list_of_Packets+List_of_Packet_headers
     cap,File_handle=reading_pcap_files(local_directory_Input_data) 
     temp,Input_packet_headers=packet_tracing_from_input_to_output(cap,File_handler,List_of_Packet_headers,Defense_tools_ID,con)
     print len(temp)
    
-##
-##    #Defense_tools_ID=populate_Defense_tools('FreeBSD_Snort_Com',con)
+
+    print "Processing FreeBSD_Snort_Com Data............"
+    #Defense_tools_ID=populate_Defense_tools('FreeBSD_Snort_Com',con)
     Defense_tools_ID=7
     mysql_Data1, mysql_Data2, mysql_Data3 =mysql_database_query("FreeBSD_Snort_Com",'F_Snort_Com',"D3Sepsrccity")
-    cap,File_handle=reading_pcap_files(local_directory_FreeBSD_Snort_Com) 
+    cap,File_handler=reading_pcap_files(local_directory_FreeBSD_Snort_Com) 
     List_of_Packet_headers=populating_tables(cap,File_handler,mysql_Data1,mysql_Data2,mysql_Data3, Defense_tools_ID,Detection_ID1,Detection_ID2,con)
     Combined_list_of_Packets= Combined_list_of_Packets+List_of_Packet_headers
     cap,File_handle=reading_pcap_files(local_directory_Input_data) 
     temp,Input_packet_headers=packet_tracing_from_input_to_output(cap,File_handler,List_of_Packet_headers,Defense_tools_ID,con)
     print len(temp)
 
-##    #Defense_tools_ID=populate_Defense_tools('FreeBSD_Snort_Reg',con)
+    print "Processing FreeBSD_Snort_Reg Data............"
+    #Defense_tools_ID=populate_Defense_tools('FreeBSD_Snort_Reg',con)
     Defense_tools_ID=8
     mysql_Data1, mysql_Data2, mysql_Data3 =mysql_database_query("FreeBSD_Snort_Reg",'F_Snort_Reg',"D3Sepsrccity")
-    cap,File_handle=reading_pcap_files(local_directory_FreeBSD_Snort_Reg) 
+    cap,File_handler=reading_pcap_files(local_directory_FreeBSD_Snort_Reg) 
     List_of_Packet_headers=populating_tables(cap,File_handler,mysql_Data1,mysql_Data2,mysql_Data3, Defense_tools_ID,Detection_ID1,Detection_ID2,con)
     Combined_list_of_Packets= Combined_list_of_Packets+List_of_Packet_headers
     cap,File_handle=reading_pcap_files(local_directory_Input_data)
     temp,Input_packet_headers=packet_tracing_from_input_to_output(cap,File_handler,List_of_Packet_headers,Defense_tools_ID,con)
     print len(temp)
 
-##    #Defense_tools_ID=populate_Defense_tools('FreeBSD_Suricata_ET',con)
+    print "Processing FreeBSD_Suricata_ET Data............"
+    #Defense_tools_ID=populate_Defense_tools('FreeBSD_Suricata_ET',con)
     Defense_tools_ID=9
     mysql_Data1, mysql_Data2, mysql_Data3 =mysql_database_query("FreeBSD_Suricata_ET",'F_Suricata_ET',"D3Sepsrccity")
-    cap,File_handle=reading_pcap_files(local_directory_FreeBSD_Suricata_ET) 
+    cap,File_handler=reading_pcap_files(local_directory_FreeBSD_Suricata_ET) 
     List_of_Packet_headers=populating_tables(cap,File_handler,mysql_Data1,mysql_Data2,mysql_Data3, Defense_tools_ID,Detection_ID1,Detection_ID2,con)
     Combined_list_of_Packets= Combined_list_of_Packets+List_of_Packet_headers
     cap,File_handle=reading_pcap_files(local_directory_Input_data) 
     temp,Input_packet_headers=packet_tracing_from_input_to_output(cap,File_handler,List_of_Packet_headers,Defense_tools_ID,con)
     print len(temp)
     
-##    #Defense_tools_ID=populate_Defense_tools('Centos_Snort_Com',con)
+    print "Processing CentSnortCommunity Data............"
+    #Defense_tools_ID=populate_Defense_tools('Centos_Snort_Com',con)
     Defense_tools_ID=10
     mysql_Data1, mysql_Data2, mysql_Data3 =mysql_database_query("CentSnortCommunity",'C_Snort_Com',"D3Sepsrccity")
-    cap,File_handle=reading_pcap_files(local_directory_CentOS_Snort_Com) 
+    cap,File_handler=reading_pcap_files(local_directory_CentOS_Snort_Com) 
     List_of_Packet_headers=populating_tables(cap,File_handler,mysql_Data1,mysql_Data2,mysql_Data3, Defense_tools_ID,Detection_ID1,Detection_ID2,con)
     Combined_list_of_Packets= Combined_list_of_Packets+List_of_Packet_headers
     cap,File_handle=reading_pcap_files(local_directory_Input_data) 
     temp,Input_packet_headers=packet_tracing_from_input_to_output(cap,File_handler,List_of_Packet_headers,Defense_tools_ID,con)
     print len(temp)
     
-##    #Defense_tools_ID=populate_Defense_tools('Centos_Snort_Reg',con)
+    print "Processing CentSnortReg Data............"
+    #Defense_tools_ID=populate_Defense_tools('Centos_Snort_Reg',con)
     Defense_tools_ID=11
     mysql_Data1, mysql_Data2, mysql_Data3 =mysql_database_query("CentSnortReg",'C_Snort_Reg',"D3Sepsrccity")
-    cap,File_handle=reading_pcap_files(local_directory_CentOS_Snort_Reg)
+    cap,File_handler=reading_pcap_files(local_directory_CentOS_Snort_Reg)
     List_of_Packet_headers=populating_tables(cap,File_handler,mysql_Data1,mysql_Data2,mysql_Data3, Defense_tools_ID,Detection_ID1,Detection_ID2,con)
     Combined_list_of_Packets= Combined_list_of_Packets+List_of_Packet_headers
     cap,File_handle=reading_pcap_files(local_directory_Input_data) 
     temp,Input_packet_headers=packet_tracing_from_input_to_output(cap,File_handler,List_of_Packet_headers,Defense_tools_ID,con)
     print len(temp)
-##
-##    #Defense_tools_ID=populate_Defense_tools('Centos_Suricata_ET',con)
+
+    print "Processing CentosSuricataET Data............"
+    #Defense_tools_ID=populate_Defense_tools('Centos_Suricata_ET',con)
     Defense_tools_ID=12
     mysql_Data1, mysql_Data2, mysql_Data3 =mysql_database_query("CentosSuricataET",'CentSuricataET',"D3Sepsrccity")
-    cap,File_handle=reading_pcap_files(local_directory_CentOS_Suricata_ET) 
+    cap,File_handler=reading_pcap_files(local_directory_CentOS_Suricata_ET) 
     List_of_Packet_headers=populating_tables(cap,File_handler,mysql_Data1,mysql_Data2,mysql_Data3, Defense_tools_ID,Detection_ID1,Detection_ID2,con)
     Combined_list_of_Packets= Combined_list_of_Packets+List_of_Packet_headers
     cap,File_handle=reading_pcap_files(local_directory_Input_data) 
     temp,Input_packet_headers=packet_tracing_from_input_to_output(cap,File_handler,List_of_Packet_headers,Defense_tools_ID,con)
     print len(temp)  
 
-#    Defense_tools_ID=populate_Defense_tools('Input',con)
+    print "Processing Input Data............"   
+#   Defense_tools_ID=populate_Defense_tools('Input',con)
     Defense_tools_ID=13
     temp=packet_tracing_from_output_to_input(Input_packet_headers,Combined_list_of_Packets,Defense_tools_ID,con)
     print len(temp)  
     con.close()
     tim_elapsed=(time.clock()- time_start)
-#    print tim_elapsed
+    print "Computation time", tim_elapsed
 
     
     
